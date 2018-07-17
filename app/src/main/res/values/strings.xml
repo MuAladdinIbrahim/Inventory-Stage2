@@ -1,0 +1,80 @@
+<resources>
+    <string name="app_name">Books</string>
+    <string name="action_insert_book">Insert Book Data</string>
+    <string name="action_delete_all_entries">Delete All Products</string>
+    <string name="editor_activity_title_new_product">Add a new Product</string>
+    <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="category_overview">Overview</string>
+    <string name="category_supplier">Supplier</string>
+    <string name="category_supplierNumber">Suppliers Phone</string>
+    <string name="hint_product_name">Book Title</string>
+    <string name="hint_price">Price</string>
+    <string name="hint_quantity">Quantity</string>
+    <string name="hint_suppliers_number">Phone Number</string>
+
+    <!-- Toast message in editor when new Book has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_book_successful">book saved</string>
+
+    <!-- Toast message in editor when new Book has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_book_failed">Error with saving book</string>
+
+    <string name="empty_view_subtitle_text">Get started by adding a book</string>
+    <string name="empty_view_title_text">It\'s a bit lonely here...</string>
+
+    <!-- Title for the activity to add a new Book [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_new_book">Add a Book</string>
+
+    <!-- Title for the activity to edit an existing Book [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_edit_book">Edit Book</string>
+
+    <!-- Toast message in editor when current book was successfully updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_book_successful">Book updated</string>
+
+    <!-- Toast message in editor when current book has failed to be updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_book_failed">Error with updating Book</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+
+    <!-- Dialog button text for the option to keep editing the current pet [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
+
+    <!-- Toast message in editor when current pet was successfully deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_book_successful">Book deleted</string>
+
+    <!-- Toast message in editor when current pet has failed to be deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_book_failed">Error with deleting book</string>
+
+    <!-- Dialog message to ask the user to confirm deleting the current pet [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this book?</string>
+
+    <!-- Dialog button text for the option to confirm deleting the current pet [CHAR LIMIT=20] -->
+    <string name="delete">Delete</string>
+
+    <!-- Dialog button text for the option to cancel deletion of the current pet [CHAR LIMIT=20] -->
+    <string name="cancel">Cancel</string>
+
+    <string name="unknown_price">Unknown price</string>
+
+    <string name="plus_button">add one</string>
+    <string name="minus_button">deduct one</string>
+    <string name="order_button">Order more</string>
+    <string name="illigal_quantity_toast">The quantity can\'t be negative</string>
+    <string name="title_insert_book_mode">Add new book</string>
+    <string name="title_update_book_mode">Update Book</string>
+    <string name="sale_button">sale</string>
+    <string name="price_of_book">price of book</string>
+    <string name="quantity_of_book">quantity of book</string>
+
+    <!-- Label for dropdown menu option  -->
+    <string name="supplier_unknown">Unknown</string>
+    <string name="Shorouq">El Shorouq</string>
+    <string name="Salam">Dar El Salam</string>
+    <string name="Ahram">El Ahram</string>
+    <string name="Nahda">Nahdt Masr</string>
+    <string name="Lebnan">Dar Lebnan</string>
+</resources>

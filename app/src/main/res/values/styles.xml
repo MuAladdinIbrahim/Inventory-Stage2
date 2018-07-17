@@ -1,0 +1,105 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Theme of the editor -->
+    <style name="EditorTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/editorColorPrimary</item>
+        <item name="colorPrimaryDark">@color/editorColorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Style for a category in the editor -->
+    <style name="CategoryStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+    <!-- Style for an EditText field in the editor -->
+    <style name="EditorFieldStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <!-- Style for the measurement units for an EditText field in the editor -->
+    <style name="EditorUnitsStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+    <style name="editor_quantity_layout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/regular_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginStart" tools:targetApi="jelly_bean_mr1">@dimen/regular_padding</item>
+    </style>
+
+    <style name="minus_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:tooltipText" tools:targetApi="o">@string/minus_button</item>
+    </style>
+
+    <style name="plus_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:tooltipText" tools:targetApi="o">@string/plus_button</item>
+    </style>
+
+    <style name="editor_quantity_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/regular_padding</item>
+        <item name="android:layout_marginRight">@dimen/regular_padding</item>
+        <item name="android:padding">@dimen/regular_padding</item>
+        <item name="android:textSize">@dimen/editor_text</item>
+    </style>
+
+    <style name="order_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/fab_margin</item>
+        <item name="android:background">@drawable/order_button</item>
+        <item name="android:tooltipText" tools:targetApi="o">@string/order_button</item>
+    </style>
+
+    <style name="list_item_text">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd" tools:targetApi="jelly_bean_mr1">@dimen/regular_padding</item>
+        <item name="android:layout_marginRight">@dimen/regular_padding</item>
+        <item name="android:gravity">left</item>
+        <item name="android:paddingTop">@dimen/regular_padding</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="sale_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd" tools:targetApi="jelly_bean_mr1">@dimen/regular_padding</item>
+        <item name="android:layout_marginRight">@dimen/regular_padding</item>
+        <item name="android:background">@drawable/sale_button</item>
+        <item name="android:focusable">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:tooltipText" tools:targetApi="o">@string/minus_button</item>
+    </style>
+
+</resources>
