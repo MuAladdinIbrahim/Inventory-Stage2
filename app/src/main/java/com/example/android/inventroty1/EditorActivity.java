@@ -130,14 +130,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             @Override
             public void onClick(View v) {
                 // On click quantity increases
-                if (mCurrentBookUri == null) {
-                    mQuantity++;
-                } else {
-                    // read quantity from TextView
-                    // parse it to Integer
-                    // increment it
-                    // set the new value to TextView
-                }
+                mQuantity++;
                 // display quantity
                 displayQuantity();
             }
