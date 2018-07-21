@@ -159,19 +159,23 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String priceString = mPriceEditText.getText().toString().trim();
         String phoneNumberString = mSuppliersNumberEditText.getText().toString().trim();
         String supplierString = mSupplierEditText.getText().toString().trim();
-
+        String quantityString = mQuantityView.getText().toString().trim();
 
         // Check that all fields in the EditText view are completed
         // No need to check for negative values of price and quantity because
         // only positive inputs are possible as specified in activity_editor.xml inputType (is NOT signed)
         if (TextUtils.isEmpty(nameString) ||
                 TextUtils.isEmpty(priceString) ||
+                TextUtils.isEmpty(quantityString) ||
                 TextUtils.isEmpty(supplierString) ||
                 TextUtils.isEmpty(phoneNumberString)) {
             Toast.makeText(this, "Some fields are empty! Check again", Toast.LENGTH_SHORT).show();
             return false;
         } else if (Double.parseDouble(priceString) == 0) {
             Toast.makeText(this, "Price can't be 0", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (Integer.parseInt(quantityString) == 0) {
+            Toast.makeText(this, "Quantity can't be 0", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;
@@ -198,13 +202,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     // This method display a toast message when the order button is clicked
     public void orderNow() {
-        int quantity = Integer.parseInt(mQuantityView.getText().toString());
-        mQuantityView.setText(String.valueOf(quantity));
-        // If quantity id 0, display toast message
-        if (quantity == 0) {
-            Toast.makeText(this, "Quantity is required", Toast.LENGTH_SHORT).show();
-        } else {
-            // Else display toast message
+            //  display toast message
             Toast.makeText(this, "Products have been successfully ordered", Toast.LENGTH_SHORT).show();
 
             // Set an intent that makes the user go to the Phone Call
@@ -216,78 +214,80 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 startActivity(callIntent);
             }
         }
-    }
 
     /**
      * Get user input from editor and save new product into database.
      */
     private void saveBook() {
-        // Read from input fields
-        // Use trim to eliminate leading or trailing white space
-        String nameString = mNameEditText.getText().toString().trim();
-        String PriceString = mPriceEditText.getText().toString().trim();
-        String QuantityString = mQuantityView.getText().toString().trim();
-        String supplierNumberString = mSuppliersNumberEditText.getText().toString().trim();
-        String supplierString = mSupplierEditText.getText().toString().trim();
 
-        // Check if this is supposed to be a new book
-        // and check if all the fields in the editor are blank
-        if (mCurrentBookUri == null && TextUtils.isEmpty(nameString) && TextUtils.isEmpty(PriceString) &&
-                TextUtils.isEmpty(supplierNumberString) ) {
-            // Since no fields were modified, we can return early without creating a new book.
-            // No need to create ContentValues and no need to do any ContentProvider operations.
-            return;
-        }
+        if (verifyFields()) {
 
-        // Create a ContentValues object where column names are the keys,
-        // and books attributes from the editor are the values.
-        ContentValues values = new ContentValues();
-        values.put(BookContract.BookEntry.COLUMN_Name, nameString);
-        values.put(BookContract.BookEntry.COLUMN_Price, PriceString);
-        values.put(BookContract.BookEntry.COLUMN_Supplier_Name, supplierString);
-        values.put(BookContract.BookEntry.COLUMN_Supplier_Phone_Number, supplierNumberString);
-        // If the quantity is not provided by the user, don't try to parse the string into an
-        // integer value. Use 0 by default.
-        int quantity = 0;
-        if (!TextUtils.isEmpty(QuantityString)) {
-            quantity = Integer.parseInt(QuantityString);
-        }
-        values.put(BookContract.BookEntry.COLUMN_Quantity, quantity);
+            // Read from input fields
+            // Use trim to eliminate leading or trailing white space
+            String nameString = mNameEditText.getText().toString().trim();
+            String PriceString = mPriceEditText.getText().toString().trim();
+            String QuantityString = mQuantityView.getText().toString().trim();
+            String supplierNumberString = mSuppliersNumberEditText.getText().toString().trim();
+            String supplierString = mSupplierEditText.getText().toString().trim();
 
-        // Determine if this is a new or existing book by checking if mCurrentBookUri is null or not
-        if (mCurrentBookUri == null) {
-            // This is a NEW book, so insert a new book into the provider,
-            // returning the content URI for the new book.
-            Uri newUri = getContentResolver().insert(BookContract.BookEntry.CONTENT_URI, values);
-
-            // Show a toast message depending on whether or not the insertion was successful.
-            if (newUri == null) {
-                // If the new content URI is null, then there was an error with insertion.
-                Toast.makeText(this, getString(R.string.editor_insert_book_failed),
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                // Otherwise, the insertion was successful and we can display a toast.
-                Toast.makeText(this, getString(R.string.editor_insert_book_successful),
-                        Toast.LENGTH_SHORT).show();
+            // Check if this is supposed to be a new book
+            // and check if all the fields in the editor are blank
+            if (mCurrentBookUri == null && TextUtils.isEmpty(nameString) && TextUtils.isEmpty(PriceString) &&
+                    TextUtils.isEmpty(supplierNumberString) & TextUtils.isEmpty(supplierString) && TextUtils.isEmpty(QuantityString)) {
+                // Since no fields were modified, we can return early without creating a new book.
+                // No need to create ContentValues and no need to do any ContentProvider operations.
+                return;
             }
 
-        } else {
-            // Otherwise this is an EXISTING book, so update the book with content URI: mCurrentBookUri
-            // and pass in the new ContentValues. Pass in null for the selection and selection args
-            // because mCurrentBookUri will already identify the correct row in the database that
-            // we want to modify.
-            int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
+            // Create a ContentValues object where column names are the keys,
+            // and books attributes from the editor are the values.
+            ContentValues values = new ContentValues();
+            values.put(BookContract.BookEntry.COLUMN_Name, nameString);
+            values.put(BookContract.BookEntry.COLUMN_Price, PriceString);
+            values.put(BookContract.BookEntry.COLUMN_Supplier_Name, supplierString);
+            values.put(BookContract.BookEntry.COLUMN_Supplier_Phone_Number, supplierNumberString);
+            // If the quantity is not provided by the user, don't try to parse the string into an
+            // integer value. Use 0 by default.
+            int quantity = 0;
+            if (!TextUtils.isEmpty(QuantityString)) {
+                quantity = Integer.parseInt(QuantityString);
+            }
+            values.put(BookContract.BookEntry.COLUMN_Quantity, quantity);
 
-            // Show a toast message depending on whether or not the update was successful.
-            if (rowsAffected == 0) {
-                // If no rows were affected, then there was an error with the update.
-                Toast.makeText(this, getString(R.string.editor_update_book_failed),
-                        Toast.LENGTH_SHORT).show();
+            // Determine if this is a new or existing book by checking if mCurrentBookUri is null or not
+            if (mCurrentBookUri == null) {
+                // This is a NEW book, so insert a new book into the provider,
+                // returning the content URI for the new book.
+                Uri newUri = getContentResolver().insert(BookContract.BookEntry.CONTENT_URI, values);
 
+                // Show a toast message depending on whether or not the insertion was successful.
+                if (newUri == null) {
+                    // If the new content URI is null, then there was an error with insertion.
+                    Toast.makeText(this, getString(R.string.editor_insert_book_failed),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // Otherwise, the insertion was successful and we can display a toast.
+                    Toast.makeText(this, getString(R.string.editor_insert_book_successful),
+                            Toast.LENGTH_SHORT).show();
+                }
             } else {
-                // Otherwise, the update was successful and we can display a toast.
-                Toast.makeText(this, getString(R.string.editor_update_book_successful),
-                        Toast.LENGTH_SHORT).show();
+                // Otherwise this is an EXISTING book, so update the book with content URI: mCurrentBookUri
+                // and pass in the new ContentValues. Pass in null for the selection and selection args
+                // because mCurrentBookUri will already identify the correct row in the database that
+                // we want to modify.
+                int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
+
+                // Show a toast message depending on whether or not the update was successful.
+                if (rowsAffected == 0) {
+                    // If no rows were affected, then there was an error with the update.
+                    Toast.makeText(this, getString(R.string.editor_update_book_failed),
+                            Toast.LENGTH_SHORT).show();
+
+                } else {
+                    // Otherwise, the update was successful and we can display a toast.
+                    Toast.makeText(this, getString(R.string.editor_update_book_successful),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
