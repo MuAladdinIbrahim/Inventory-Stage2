@@ -16,11 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.inventroty1.data.BookContract;
@@ -53,9 +50,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     /**
      * EditText field to enter the books supplier
      */
-    private Spinner mSupplierSpinner;
-
-    private int mSupplier; //BookContract.BookEntry.SUPPLIER_UNKNOWN;
+    private EditText mSupplierEditText;
 
     private Uri mCurrentBookUri;
     private static final int EXISTING_BOOK_LOADER = 0;
@@ -106,7 +101,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mNameEditText = findViewById(R.id.edit_product_name);
         mPriceEditText = findViewById(R.id.edit_price);
         mQuantityView = findViewById(R.id.quantity);
-        mSupplierSpinner = findViewById(R.id.spinner_supplier);
+        mSupplierEditText = findViewById(R.id.supplier);
         mSuppliersNumberEditText = findViewById(R.id.edit_supplier_phone);
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
@@ -115,10 +110,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mNameEditText.setOnTouchListener(mTouchListener);
         mPriceEditText.setOnTouchListener(mTouchListener);
         mQuantityView.setOnTouchListener(mTouchListener);
-        mSupplierSpinner.setOnTouchListener(mTouchListener);
+        mSupplierEditText.setOnTouchListener(mTouchListener);
         mSuppliersNumberEditText.setOnTouchListener(mTouchListener);
-
-
 
         // Button that increases the quantity
         Button incrementButton = findViewById(R.id.increment);
@@ -145,7 +138,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             }
         });
 
-
         // Button for ordering the products
         final Button orderNowButton = findViewById(R.id.order_button);
         orderNowButton.setOnClickListener(new View.OnClickListener() {
@@ -166,12 +158,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String nameString = mNameEditText.getText().toString().trim();
         String priceString = mPriceEditText.getText().toString().trim();
         String phoneNumberString = mSuppliersNumberEditText.getText().toString().trim();
+        String supplierString = mSupplierEditText.getText().toString().trim();
+
 
         // Check that all fields in the EditText view are completed
         // No need to check for negative values of price and quantity because
         // only positive inputs are possible as specified in activity_editor.xml inputType (is NOT signed)
         if (TextUtils.isEmpty(nameString) ||
                 TextUtils.isEmpty(priceString) ||
+                TextUtils.isEmpty(supplierString) ||
                 TextUtils.isEmpty(phoneNumberString)) {
             Toast.makeText(this, "Some fields are empty! Check again", Toast.LENGTH_SHORT).show();
             return false;
@@ -208,7 +203,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // If quantity id 0, display toast message
         if (quantity == 0) {
             Toast.makeText(this, "Quantity is required", Toast.LENGTH_SHORT).show();
-
         } else {
             // Else display toast message
             Toast.makeText(this, "Products have been successfully ordered", Toast.LENGTH_SHORT).show();
@@ -222,52 +216,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 startActivity(callIntent);
             }
         }
-        setupSpinner();
-    }
-
-    /**
-     * Setup the dropdown spinner that allows the user to select the gender of the Book.
-     */
-    private void setupSpinner() {
-        // Create adapter for spinner. The list options are from the String array it will use
-        // the spinner will use the default layout
-        ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.array_supplier_options, android.R.layout.simple_spinner_item);
-
-        // Specify dropdown layout style - simple list view with 1 item per line
-        genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-
-        // Apply the adapter to the spinner
-        mSupplierSpinner.setAdapter(genderSpinnerAdapter);
-
-        // Set the integer mSelected to the constant values
-        mSupplierSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-                if (!TextUtils.isEmpty(selection)) {
-                    if (selection.equals(getString(R.string.Nahda))) {
-                        mSupplier = BookContract.BookEntry.SUPPLIER_NAHDA;
-                    } else if (selection.equals(getString(R.string.Lebnan))) {
-                        mSupplier = BookContract.BookEntry.SUPPLIER_LEBNAN;
-                    } else if (selection.equals(getString(R.string.Salam))) {
-                        mSupplier = BookContract.BookEntry.SUPPLIER_SALAM;
-                    } else if (selection.equals(getString(R.string.Ahram))) {
-                        mSupplier = BookContract.BookEntry.SUPPLIER_AHRAM;
-                    } else if (selection.equals(getString(R.string.Shorouq))) {
-                        mSupplier = BookContract.BookEntry.SUPPLIER_SHROUQ;
-                    } else {
-                        mSupplier = BookContract.BookEntry.SUPPLIER_UNKNOWN;
-                    }
-                }
-            }
-
-            // Because AdapterView is an abstract class, onNothingSelected must be defined
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                mSupplier = 0;
-            }
-        });
     }
 
     /**
@@ -280,6 +228,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String PriceString = mPriceEditText.getText().toString().trim();
         String QuantityString = mQuantityView.getText().toString().trim();
         String supplierNumberString = mSuppliersNumberEditText.getText().toString().trim();
+        String supplierString = mSupplierEditText.getText().toString().trim();
 
         // Check if this is supposed to be a new book
         // and check if all the fields in the editor are blank
@@ -295,7 +244,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         ContentValues values = new ContentValues();
         values.put(BookContract.BookEntry.COLUMN_Name, nameString);
         values.put(BookContract.BookEntry.COLUMN_Price, PriceString);
-        values.put(BookContract.BookEntry.COLUMN_Supplier_Name, mSupplier);
+        values.put(BookContract.BookEntry.COLUMN_Supplier_Name, supplierString);
         values.put(BookContract.BookEntry.COLUMN_Supplier_Phone_Number, supplierNumberString);
         // If the quantity is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
@@ -443,6 +392,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 BookContract.BookEntry.COLUMN_Name,
                 BookContract.BookEntry.COLUMN_Price,
                 BookContract.BookEntry.COLUMN_Quantity,
+                BookContract.BookEntry.COLUMN_Supplier_Name,
                 BookContract.BookEntry.COLUMN_Supplier_Phone_Number };
 
         // This loader will execute the ContentProvider's query method on a background thread
@@ -469,6 +419,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             int nameColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_Name);
             int priceColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_Price);
             int quantityColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_Quantity);
+            int supplierColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_Supplier_Name);
             int phColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_Supplier_Phone_Number);
 
             // Extract out the value from the Cursor for the given column index
@@ -476,12 +427,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             String price = cursor.getString(priceColumnIndex);
             String quantity = cursor.getString(quantityColumnIndex);
             String ph = cursor.getString(phColumnIndex);
+            String supplier = cursor.getString(supplierColumnIndex);
 
             // Update the views on the screen with the values from the database
             mNameEditText.setText(name);
             mPriceEditText.setText(price);
             mQuantityView.setText(quantity);
             mSuppliersNumberEditText.setText(ph);
+            mSupplierEditText.setText(supplier);
         }
     }
 
@@ -492,6 +445,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mPriceEditText.setText("");
         mQuantityView.setText("");
         mSuppliersNumberEditText.setText("");
+        mSupplierEditText.setText("");
     }
     private void showUnsavedChangesDialog(
             DialogInterface.OnClickListener discardButtonClickListener) {

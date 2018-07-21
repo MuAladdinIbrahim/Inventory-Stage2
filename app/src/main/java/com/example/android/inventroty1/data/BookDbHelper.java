@@ -9,9 +9,9 @@ import com.example.android.inventroty1.data.BookContract.BookEntry;
 
 public class BookDbHelper extends SQLiteOpenHelper {
 
-    public static final String LOG_TAG = BookDbHelper.class.getSimpleName();
+//    public static final String LOG_TAG = BookDbHelper.class.getSimpleName();
 
-    private static final String DATABASE_NAME = "book.db";
+    private static final String DATABASE_NAME = "books.db";
 
     private static final int DATABASE_VERSION = 1;
 

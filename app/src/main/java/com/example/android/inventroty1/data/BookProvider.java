@@ -153,7 +153,7 @@ public class BookProvider extends ContentProvider {
 
         // Check that the quantity is valid
         Integer quantity = values.getAsInteger(BookContract.BookEntry.COLUMN_Quantity);
-        if (quantity == null) {
+        if (quantity == null && quantity < 0) {
             throw new IllegalArgumentException("Quantity of book is required");
         }
 
@@ -162,12 +162,6 @@ public class BookProvider extends ContentProvider {
         if (price != null && price < 0) {
             throw new IllegalArgumentException("Book requires a valid price");
         }
-
-        //phone number of supplier is required
-//        Integer phoneNo = values.getAsInteger(BookContract.BookEntry.COLUMN_Supplier_Phone_Number);
-//        if (phoneNo != null) {
-//            throw new IllegalArgumentException("Phone Number is not valid");
-//        }
 
         // Get writable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
@@ -263,12 +257,6 @@ public class BookProvider extends ContentProvider {
                 throw new IllegalArgumentException("Book requires a valid price");
             }
 
-//            //phone number of supplier is required
-//            Integer phoneNo = values.getAsInteger(BookContract.BookEntry.COLUMN_Supplier_Phone_Number);
-//            if (phoneNo != null) {
-//                throw new IllegalArgumentException("Phone Number is not valid");
-//            }
-
             // Check that the quantity is valid
             Integer quantity = values.getAsInteger(BookContract.BookEntry.COLUMN_Quantity);
             if (quantity == null) {
@@ -294,7 +282,5 @@ public class BookProvider extends ContentProvider {
          // Return the number of rows updated
         return rowsUpdated;
         }
-
-
 }
 

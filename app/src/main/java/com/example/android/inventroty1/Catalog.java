@@ -25,7 +25,6 @@ public class Catalog extends AppCompatActivity implements LoaderManager.LoaderCa
     private static final int BOOK_LOADER = 0;
     BookCursorAdapter mCursorAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +41,7 @@ public class Catalog extends AppCompatActivity implements LoaderManager.LoaderCa
         });
 
         // Find the ListView which will be populated with the book data
-        ListView BookListView = findViewById(R.id.list);
+        ListView BookListView = (ListView) findViewById(R.id.list);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
         View emptyView = findViewById(R.id.empty_view);
@@ -74,7 +73,7 @@ public class Catalog extends AppCompatActivity implements LoaderManager.LoaderCa
         });
 
         //kick off the loader
-        getSupportLoaderManager().initLoader(BOOK_LOADER, null, this);
+        getSupportLoaderManager().initLoader(BOOK_LOADER, null, Catalog.this);
     }
 
     private void insertBook() {
@@ -83,8 +82,8 @@ public class Catalog extends AppCompatActivity implements LoaderManager.LoaderCa
         // and Magazine attributes are the values.
         ContentValues values = new ContentValues();
         values.put(BookContract.BookEntry.COLUMN_Name, "magazine");
-        values.put(BookContract.BookEntry.COLUMN_Price, "20");
-        values.put(BookContract.BookEntry.COLUMN_Quantity, "125");
+        values.put(BookContract.BookEntry.COLUMN_Price, 20);
+        values.put(BookContract.BookEntry.COLUMN_Quantity, 13);
         values.put(BookContract.BookEntry.COLUMN_Supplier_Name, "Times");
         values.put(BookContract.BookEntry.COLUMN_Supplier_Phone_Number, 568654526);
 
@@ -129,7 +128,8 @@ public class Catalog extends AppCompatActivity implements LoaderManager.LoaderCa
         String[] projection = {
                 BookContract.BookEntry._ID,
                 BookContract.BookEntry.COLUMN_Name,
-                BookContract.BookEntry.COLUMN_Price
+                BookContract.BookEntry.COLUMN_Price,
+                BookContract.BookEntry.COLUMN_Quantity
         };
 
         return new CursorLoader(this,

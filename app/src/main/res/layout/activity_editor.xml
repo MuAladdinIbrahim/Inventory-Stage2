@@ -87,12 +87,14 @@
             android:orientation="vertical">
 
             <!-- Supplier drop-down spinner -->
-            <Spinner
-                android:id="@+id/spinner_supplier"
+            <EditText
+                android:id="@+id/supplier"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:paddingRight="16dp"
-                android:spinnerMode="dropdown"/>
+                android:inputType="textCapWords"
+                style="@style/EditorFieldStyle"
+                />
         </LinearLayout>
     </LinearLayout>
 
