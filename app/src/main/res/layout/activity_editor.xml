@@ -50,9 +50,10 @@
                     android:src="@drawable/ic_action_minus"
                     style="@style/minus_button" />
 
-                <TextView
+                <EditText
                     android:id="@+id/quantity"
                     tools:text="0"
+                    android:inputType="numberDecimal"
                     style="@style/editor_quantity_text" />
 
                 <Button
@@ -88,7 +89,7 @@
             <!-- Supplier drop-down spinner -->
             <Spinner
                 android:id="@+id/spinner_supplier"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:paddingRight="16dp"
                 android:spinnerMode="dropdown"/>

@@ -21,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.inventroty1.data.BookContract;
@@ -44,10 +43,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     /**
      * EditText field to enter the books quantity;
      */
-    private TextView mQuantityView;
-
-    private int mQuantity;
-
+    private EditText mQuantityView;
 
     /**
      * EditText field to enter the suppliers phone number;
@@ -55,11 +51,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private EditText mSuppliersNumberEditText;
 
     /**
-     * EditText field to enter the books supplierr
+     * EditText field to enter the books supplier
      */
     private Spinner mSupplierSpinner;
 
-    private int mSupplier = BookContract.BookEntry.SUPPLIER_UNKNOWN;
+    private int mSupplier; //BookContract.BookEntry.SUPPLIER_UNKNOWN;
 
     private Uri mCurrentBookUri;
     private static final int EXISTING_BOOK_LOADER = 0;
@@ -125,13 +121,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
 
         // Button that increases the quantity
-        final Button incrementButton = findViewById(R.id.increment);
+        Button incrementButton = findViewById(R.id.increment);
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // On click quantity increases
-                mQuantity++;
-                // display quantity
+
+                int quantity = Integer.parseInt(mQuantityView.getText().toString());
+                quantity += 1;
+                mQuantityView.setText(String.valueOf(quantity));
                 displayQuantity();
             }
         });
@@ -187,26 +184,29 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     public void decrementButton(View view) {
+        int quantity = Integer.parseInt(mQuantityView.getText().toString());
         // If quantity = 0 show toast message
-        if (mQuantity == 0) {
+        if (quantity == 0) {
             Toast.makeText(this, "Can't decrease quantity", Toast.LENGTH_SHORT).show();
         } else {
             // If quantity is not 0, decrease quantity
-            mQuantity--;
-            displayQuantity();
-        }
+            quantity -= 1;
+            mQuantityView.setText(String.valueOf(quantity));
+            }
     }
 
     // This method displays the quantity of products
     public void displayQuantity() {
-        TextView quantityView =  findViewById(R.id.quantity);
-        quantityView.setText(String.valueOf(mQuantity));
+        int quantity = Integer.parseInt(mQuantityView.getText().toString());
+        mQuantityView.setText(String.valueOf(quantity));
     }
 
     // This method display a toast message when the order button is clicked
     public void orderNow() {
+        int quantity = Integer.parseInt(mQuantityView.getText().toString());
+        mQuantityView.setText(String.valueOf(quantity));
         // If quantity id 0, display toast message
-        if (mQuantity == 0) {
+        if (quantity == 0) {
             Toast.makeText(this, "Quantity is required", Toast.LENGTH_SHORT).show();
 
         } else {
@@ -222,7 +222,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 startActivity(callIntent);
             }
         }
-
         setupSpinner();
     }
 
@@ -266,7 +265,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mSupplier = BookContract.BookEntry.SUPPLIER_UNKNOWN;
+                mSupplier = 0;
             }
         });
     }
@@ -521,7 +520,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
      */
     private void showDeleteConfirmationDialog() {
         // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the postivie and negative buttons on the dialog.
+        // for the positive and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.delete_dialog_msg);
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {

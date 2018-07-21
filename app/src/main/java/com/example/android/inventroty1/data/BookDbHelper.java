@@ -26,7 +26,7 @@ public class BookDbHelper extends SQLiteOpenHelper {
                 + BookEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + BookEntry.COLUMN_Name + " TEXT NOT NULL, "
                 + BookEntry.COLUMN_Price + " INTEGER NOT NULL DEFAULT 0, "
-                + BookEntry.COLUMN_Quantity + " INTEGER NOT NULL DEFAULT 0, "
+                + BookEntry.COLUMN_Quantity + " INTEGER NOT NULL DEFAULT 1, "
                 + BookEntry.COLUMN_Supplier_Name + " TEXT NOT NULL, "
                 + BookEntry.COLUMN_Supplier_Phone_Number + " INTEGER NOT NULL);";
 

@@ -83,7 +83,7 @@ public class Catalog extends AppCompatActivity implements LoaderManager.LoaderCa
         // and Magazine attributes are the values.
         ContentValues values = new ContentValues();
         values.put(BookContract.BookEntry.COLUMN_Name, "magazine");
-        values.put(BookContract.BookEntry.COLUMN_Price, "20$");
+        values.put(BookContract.BookEntry.COLUMN_Price, "20");
         values.put(BookContract.BookEntry.COLUMN_Quantity, "125");
         values.put(BookContract.BookEntry.COLUMN_Supplier_Name, "Times");
         values.put(BookContract.BookEntry.COLUMN_Supplier_Phone_Number, 568654526);
